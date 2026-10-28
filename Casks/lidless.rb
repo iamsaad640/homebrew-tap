@@ -12,14 +12,14 @@ cask "lidless" do
     strategy :github_latest
   end
 
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "Lidless.app"
 
   # The app is ad-hoc signed, not notarized, so Gatekeeper blocks it while quarantined.
-  postflight do
-    system_command "/usr/bin/xattr",
-                   args: ["-d", "-r", "com.apple.quarantine", "#{appdir}/Lidless.app"]
+  postflight_steps do
+    run "/usr/bin/xattr",
+        args: ["-d", "-r", "com.apple.quarantine", "{{appdir}}/Lidless.app"]
   end
 
   uninstall quit:       "io.github.iamsaad640.lidless",
@@ -30,8 +30,8 @@ cask "lidless" do
               must_succeed: false,
             }
 
-  zap trash:  "~/Library/Preferences/io.github.iamsaad640.lidless.plist",
-      delete: "/etc/sudoers.d/lidless"
+  zap delete: "/etc/sudoers.d/lidless",
+      trash:  "~/Library/Preferences/io.github.iamsaad640.lidless.plist"
 
   caveats <<~EOS
     Lidless switches sleep with `sudo -n pmset disablesleep`, which needs a
