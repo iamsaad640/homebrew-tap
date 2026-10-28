@@ -4,16 +4,17 @@ Homebrew casks for macOS apps by [Saad Ahmed](https://github.com/iamsaad640).
 
 ## Usage
 
-Install an app directly; Homebrew adds the tap automatically:
+Install an app by its full name. Homebrew adds the tap and trusts only that cask:
 
 ```sh
 brew install --cask iamsaad640/tap/<name>
 ```
 
-Or add the tap once and use short names:
+To use short names, add the tap and trust the cask first, as required for non-official taps since Homebrew 6:
 
 ```sh
 brew tap iamsaad640/tap
+brew trust --cask iamsaad640/tap/<name>
 brew install --cask <name>
 ```
 
